@@ -4,6 +4,7 @@ import {scaleBand, scaleLinear} from 'd3-scale'
 import {axisBottom, axisLeft} from 'd3-axis'
 import {format} from 'd3-format'
 import {interpolateHcl} from 'd3-interpolate'
+import {color} from 'd3-color'
 
 const defaults = {
 
@@ -18,7 +19,10 @@ const defaults = {
     right: 10,
     bottom: 30,
     left: 40
-  }
+  },
+
+  mouseover: () => {},
+  mouseout: () => {}
 
 }
 
@@ -63,6 +67,13 @@ export default class HittingEfficiency {
 
     this.chart.append('g')
       .attr('class', 'y axis')
+
+    // http://uigradients.com/#EasyMed
+    this.color = scaleLinear()
+      .domain([0, 1])
+      .range(['#DCE35B', '#45B649'])
+      .interpolate(interpolateHcl)
+
   }
 
   renderGrid () {
@@ -94,6 +105,7 @@ export default class HittingEfficiency {
       .data(data)
       .enter()
       .append('text')
+      .style('pointer-events', 'none')
       .attr('class', 'label')
       .attr('text-anchor', 'middle')
       .attr('x', d => x(d.desc) + (x.bandwidth() / 2))
@@ -103,24 +115,22 @@ export default class HittingEfficiency {
   }
 
   renderChart (data) {
-    const {x, y, chart, h} = this
-
-    // http://uigradients.com/#EasyMed
-    const color = scaleLinear()
-      .domain([0, 1])
-      .range(['#DCE35B', '#45B649'])
-      .interpolate(interpolateHcl)
+    const {x, y, chart, h, mouseover, mouseout} = this
 
     chart.selectAll('.bar')
       .data(data)
       .enter()
       .append('rect')
-      .attr('class', 'bar')
-      .style('fill', d => color(d.value))
+      .attr('class', (d, i) => `bar bar--${i}`)
+      .style('fill', d => this.color(d.value))
+      // save color as backup for blur event
+      .attr('data-fill', d => this.color(d.value))
       .attr('x', d => x(d.desc))
       .attr('y', d => y(d.value))
       .attr('width', x.bandwidth())
       .attr('height', d => h - y(d.value))
+      .on('mouseover', mouseover)
+      .on('mouseout', mouseout)
   }
 
   render (data) {
@@ -133,6 +143,16 @@ export default class HittingEfficiency {
     this.renderAxis()
     this.renderChart(data)
     this.renderLabels(data)
+  }
+
+  focus (index) {
+    this.chart.select(`.bar.bar--${index}`)
+      .style('fill', d => color(this.color(d.value)).darker().toString())
+  }
+
+  blur (index) {
+    this.chart.select(`.bar.bar--${index}`)
+      .style('fill', function() {return select(this).attr('data-fill')})
   }
 
 }
