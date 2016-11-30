@@ -73,7 +73,6 @@ export default class HittingEfficiency {
       .domain([0, 1])
       .range(['#DCE35B', '#45B649'])
       .interpolate(interpolateHcl)
-
   }
 
   renderGrid () {
@@ -147,12 +146,12 @@ export default class HittingEfficiency {
 
   focus (index) {
     this.chart.select(`.bar.bar--${index}`)
-      .style('fill', d => color(this.color(d.value)).darker().toString())
+      .style('fill', d => color(this.color(d.value)).brighter(0.5).toString())
   }
 
   blur (index) {
     this.chart.select(`.bar.bar--${index}`)
-      .style('fill', function() {return select(this).attr('data-fill')})
+      .style('fill', function () { return select(this).attr('data-fill') })
   }
 
 }
