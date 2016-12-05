@@ -1,7 +1,7 @@
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {HittingEfficiency} from '../'
+import {HittingEfficiency, GroupedBarChart} from '../'
 
 class App extends React.Component {
 
@@ -23,6 +23,10 @@ class App extends React.Component {
       mouseout: this.onChartOut
     })
     this.he.render(data)
+    this.groupedBarChart = new GroupedBarChart({
+      target: this.refs.groupedBarChart
+    })
+    this.groupedBarChart.render()
   }
 
   onChartOver = (d, i, n) => {
@@ -66,6 +70,7 @@ class App extends React.Component {
             ))}
           </tbody>
         </table>
+        <svg ref='groupedBarChart' />
       </div>
     )
   }
