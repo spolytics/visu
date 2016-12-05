@@ -45,7 +45,7 @@ export default class GroupedBarChart {
       .padding(0.1)
 
     this.x1 = scaleBand()
-      .rangeRound([0, width])
+      // .rangeRound([0, width])
 
     this.y = scaleLinear()
       .range([height, 0])
@@ -74,9 +74,13 @@ export default class GroupedBarChart {
       })
     })
 
-    this.x0.domain(data.map(d => d.State))
+    this.x0
+      .domain(data.map(d => d.State))
 
-    this.x1.domain(ageNames).range([0, this.x0.bandwidth()])
+    this.x1
+      .domain(ageNames)
+      .rangeRound([0, this.x0.bandwidth()])
+
     this.y.domain([0, max(data, function (c) {
       return max(c.ages, function (d) {
         return d.value
