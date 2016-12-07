@@ -60,88 +60,90 @@ export default class GroupedBarChart {
 
   render () {
     const data = [
-      {
-        "State":"CA",
-        "Under 5 Years":"2704659",
-        "5 to 13 Years":"4499890",
-        "14 to 17 Years":"2159981",
-        "18 to 24 Years":"3853788",
-        "25 to 44 Years":"10604510",
-        "45 to 64 Years":"8819342",
-        "65 Years and Over":"4114496"
-      },
-      {
-        "State":"TX",
-        "Under 5 Years":"2027307",
-        "5 to 13 Years":"3277946",
-        "14 to 17 Years":"1420518",
-        "18 to 24 Years":"2454721",
-        "25 to 44 Years":"7017731",
-        "45 to 64 Years":"5656528",
-        "65 Years and Over":"2472223"
-      },
-      {
-        "State":"NY",
-        "Under 5 Years":"1208495",
-        "5 to 13 Years":"2141490",
-        "14 to 17 Years":"1058031",
-        "18 to 24 Years":"1999120",
-        "25 to 44 Years":"5355235",
-        "45 to 64 Years":"5120254",
-        "65 Years and Over":"2607672"
-      },
-      {
-        "State":"FL",
-        "Under 5 Years":"1140516",
-        "5 to 13 Years":"1938695",
-        "14 to 17 Years":"925060",
-        "18 to 24 Years":"1607297",
-        "25 to 44 Years":"4782119",
-        "45 to 64 Years":"4746856",
-        "65 Years and Over":"3187797"
-      },
-      {
-        "State":"IL",
-        "Under 5 Years":"894368",
-        "5 to 13 Years":"1558919",
-        "14 to 17 Years":"725973",
-        "18 to 24 Years":"1311479",
-        "25 to 44 Years":"3596343",
-        "45 to 64 Years":"3239173",
-        "65 Years and Over":"1575308"
-      },
-      {
-        "State":"PA",
-        "Under 5 Years":"737462",
-        "5 to 13 Years":"1345341",
-        "14 to 17 Years":"679201",
-        "18 to 24 Years":"1203944",
-        "25 to 44 Years":"3157759",
-        "45 to 64 Years":"3414001",
-        "65 Years and Over":"1910571"
-      }
+      [
+        {name: "Under 5 Years", value: 2704659},
+        {name: "5 to 13 Years", value: 4499890},
+        {name: "14 to 17 Years", value: 2159981},
+        {name: "18 to 24 Years", value: 3853788},
+        {name: "25 to 44 Years", value: 10604510},
+        {name: "45 to 64 Years", value: 8819342},
+        {name: "65 Years and Over", value: 4114496}
+      ],
+      [
+        {name: "Under 5 Years", value: 2027307},
+        {name: "5 to 13 Years", value: 3277946},
+        {name: "14 to 17 Years", value: 1420518},
+        {name: "18 to 24 Years", value: 2454721},
+        {name: "25 to 44 Years", value: 7017731},
+        {name: "45 to 64 Years", value: 5656528},
+        {name: "65 Years and Over", value: 2472223}
+      ],
+      [
+        {name: "Under 5 Years", value: 1208495},
+        {name: "5 to 13 Years", value: 2141490},
+        {name: "14 to 17 Years", value: 1058031},
+        {name: "18 to 24 Years", value: 1999120},
+        {name: "25 to 44 Years", value: 5355235},
+        {name: "45 to 64 Years", value: 5120254},
+        {name: "65 Years and Over", value: 2607672}
+      ],
+      [
+        {name: "Under 5 Years", value: 1140516},
+        {name: "5 to 13 Years", value: 1938695},
+        {name: "14 to 17 Years", value: 925060},
+        {name: "18 to 24 Years", value: 1607297},
+        {name: "25 to 44 Years", value: 4782119},
+        {name: "45 to 64 Years", value: 4746856},
+        {name: "65 Years and Over", value: 3187797}
+      ],
+      [
+        {name: "Under 5 Years", value: 894368},
+        {name: "5 to 13 Years", value: 1558919},
+        {name: "14 to 17 Years", value: 725973},
+        {name: "18 to 24 Years", value: 1311479},
+        {name: "25 to 44 Years", value: 3596343},
+        {name: "45 to 64 Years", value: 3239173},
+        {name: "65 Years and Over", value: 1575308}
+      ],
+      [
+        {name: "Under 5 Years", value: 737462},
+        {name: "5 to 13 Years", value: 1345341},
+        {name: "14 to 17 Years", value: 679201},
+        {name: "18 to 24 Years", value: 1203944},
+        {name: "25 to 44 Years", value: 3157759},
+        {name: "45 to 64 Years", value: 3414001},
+        {name: "65 Years and Over", value: 1910571}
+      ]
     ]
 
-    var ageNames = keys(data[0]).filter(key => key !== 'State')
+    const ageNames = [
+        "Under 5 Years",
+        "5 to 13 Years",
+        "14 to 17 Years",
+        "18 to 24 Years",
+        "25 to 44 Years",
+        "45 to 64 Years",
+        "65 Years and Over"
+    ]
 
-    data.forEach(function (d) {
-      d.ages = ageNames.map(function (name) {
-        return {
-          name: name,
-          value: +d[name]
-        }
-      })
-    })
+    const stateNames = [
+      "CA",
+      "TX",
+      "NY",
+      "FL",
+      "IL",
+      "PA"
+    ]
 
     this.x0
-      .domain(data.map(d => d.State))
+      .domain(stateNames)
 
     this.x1
       .domain(ageNames)
       .rangeRound([0, this.x0.bandwidth()])
 
     this.y.domain([0, max(data, function (c) {
-      return max(c.ages, function (d) {
+      return max(c, function (d) {
         return d.value
       })
     })])
@@ -150,10 +152,10 @@ export default class GroupedBarChart {
       .data(data)
       .enter().append('g')
       .attr('class', 'state')
-      .attr('transform', d => `translate(${this.x0(d.State)}, 0)`)
+      .attr('transform', (d, i) => `translate(${this.x0(stateNames[i])}, 0)`)
 
     state.selectAll('rect')
-      .data(d => d.ages)
+      .data(d => d)
       .enter()
       .append('rect')
       .attr('width', this.x1.bandwidth())
