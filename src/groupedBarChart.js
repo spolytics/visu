@@ -2,7 +2,7 @@
 import {select} from 'd3-selection'
 import {axisBottom, axisLeft} from 'd3-axis'
 import {scaleBand, scaleLinear, scaleOrdinal} from 'd3-scale'
-// import {keys} from 'd3-collection'
+import {keys, values} from 'd3-collection'
 import {range, max} from 'd3-array'
 
 const defaults = {
@@ -66,16 +66,30 @@ export default class GroupedBarChart {
 
   render () {
     const data = [
-      [2704659, 4499890, 2159981, 3853788, 10604510, 8819342, 4114496],
-      [2027307, 3277946, 1420518, 2454721, 7017731, 5656528, 2472223],
-      [1208495, 2141490, 1058031, 1999120, 5355235, 5120254, 2607672],
-      [1140516, 1938695, 925060, 1607297, 4782119, 4746856, 3187797],
-      [894368, 1558919, 725973, 1311479, 3596343, 3239173, 1575308],
-      [737462, 1345341, 679201, 1203944, 3157759, 3414001, 1910571]
+      {
+        'Fuzhou': [2704659, 4499890, 2159981, 3853788, 10604510, 8819342, 4114496]
+      },
+      {
+        'Klagenfurt': [2027307, 3277946, 1420518, 2454721, 7017731, 5656528, 2472223]
+      },
+      {
+        'Rio': [1208495, 2141490, 1058031, 1999120, 5355235, 5120254, 2607672]
+      },
+      {
+        'Gstaad': [1140516, 1938695, 925060, 1607297, 4782119, 4746856, 3187797]
+      },
+      {
+        'Hamburg': [894368, 1558919, 725973, 1311479, 3596343, 3239173, 1575308]
+      },
+      {
+        'Berlin': [737462, 1345341, 679201, 1203944, 3157759, 3414001, 1910571]
+      }
     ]
 
+    const keyNames = data.map(d => keys(d))
+
     this.x0
-      .domain(range(0, data.length))
+      .domain(keyNames)
 
     this.chart.select('.x.axis')
       .call(this.xAxis)
@@ -85,7 +99,7 @@ export default class GroupedBarChart {
       .rangeRound([0, this.x0.bandwidth()])
 
     this.y.domain([0, max(data, function (c) {
-      return max(c)
+      return max(values(c)[0])
     })])
 
     this.chart.select('.y.axis')
@@ -95,10 +109,10 @@ export default class GroupedBarChart {
       .data(data)
       .enter().append('g')
       .attr('class', 'state')
-      .attr('transform', (d, i) => `translate(${this.x0(i)}, 0)`)
+      .attr('transform', d => `translate(${this.x0(keys(d))}, 0)`)
 
     state.selectAll('rect')
-      .data(d => d)
+      .data(d => d[keys(d)])
       .enter()
       .append('rect')
       .attr('width', this.x1.bandwidth())
