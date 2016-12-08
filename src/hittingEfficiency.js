@@ -128,8 +128,14 @@ export default class HittingEfficiency {
       .attr('y', d => y(d.value))
       .attr('width', x.bandwidth())
       .attr('height', d => h - y(d.value))
-      .on('mouseover', mouseover)
-      .on('mouseout', mouseout)
+      .on('mouseover', (d, i, n) => {
+        this.focus(i)
+        mouseover(d, i, n)
+      })
+      .on('mouseout', (d, i, n) => {
+        this.blur(i)
+        mouseout(d, i, n)
+      })
   }
 
   render (data) {
