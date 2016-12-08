@@ -22,6 +22,12 @@ const defaults = {
 
 }
 
+const ordinal = (n) => {
+  const s = ['th', 'st', 'nd', 'rd']
+  const v = n % 100
+  return n + (s[(v - 20) % 10] || s[v] || s[0])
+}
+
 export default class GroupedBarChart {
 
   constructor (config) {
@@ -120,6 +126,28 @@ export default class GroupedBarChart {
       .attr('y', d => this.y(d))
       .attr('height', d => this.h - this.y(d))
       .style('fill', (d, i) => this.color(i))
+
+    const legend = this.chart.selectAll('.legend')
+      .data(range(0, data.length))
+      .enter()
+      .append('g')
+      .attr('class', 'legend')
+      .attr('transform', (d, i) => `translate(0, ${i * 20})`)
+
+    legend.append('rect')
+      .attr('x', this.w - 18)
+      .attr('width', 18)
+      .attr('height', 18)
+      .style('fill', this.color)
+
+    legend.append('text')
+      .attr('x', this.w - 24)
+      .attr('y', 9)
+      // move text a wee bit down since we do not have a letters like q or y
+      // .attr('dy', '0.15em')
+      .style('text-anchor', 'end')
+      .style('alignment-baseline', 'middle')
+      .text(d => `${ordinal(d + 1)} set`)
   }
 
 }
