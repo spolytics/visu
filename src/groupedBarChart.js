@@ -1,9 +1,9 @@
 
 import {select} from 'd3-selection'
 import {axisBottom, axisLeft} from 'd3-axis'
-import {scaleBand, scaleLinear, scaleOrdinal} from 'd3-scale'
-import {keys, values} from 'd3-collection'
-import {range, max} from 'd3-array'
+import {scaleBand, scaleLinear, scaleOrdinal, schemeCategory20c} from 'd3-scale'
+import {keys} from 'd3-collection'
+import {range} from 'd3-array'
 
 const defaults = {
 
@@ -17,8 +17,12 @@ const defaults = {
     top: 10,
     right: 10,
     bottom: 30,
-    left: 70
-  }
+    left: 30
+  },
+
+  // max number of sets
+  // e.g. best of 5
+  maxSetCount: 3
 
 }
 
@@ -48,12 +52,13 @@ export default class GroupedBarChart {
 
     this.x0 = scaleBand()
       .rangeRound([0, this.w])
-      .padding(0.1)
+      .padding(0.4)
 
     this.x1 = scaleBand()
 
     this.y = scaleLinear()
       .range([this.h, 0])
+      .domain([0, 1])
 
     this.xAxis = axisBottom(this.x0)
 
@@ -66,31 +71,11 @@ export default class GroupedBarChart {
     this.chart.append('g')
       .attr('class', 'y axis')
 
-    this.color = scaleOrdinal()
-        .range(['#98abc5', '#8a89a6', '#7b6888', '#6b486b', '#a05d56', '#d0743c', '#ff8c00'])
+    this.color = scaleOrdinal(schemeCategory20c)
   }
 
-  render () {
-    const data = [
-      {
-        'Fuzhou': [2704659, 4499890, 2159981, 3853788, 10604510, 8819342, 4114496]
-      },
-      {
-        'Klagenfurt': [2027307, 3277946, 1420518, 2454721, 7017731, 5656528, 2472223]
-      },
-      {
-        'Rio': [1208495, 2141490, 1058031, 1999120, 5355235, 5120254, 2607672]
-      },
-      {
-        'Gstaad': [1140516, 1938695, 925060, 1607297, 4782119, 4746856, 3187797]
-      },
-      {
-        'Hamburg': [894368, 1558919, 725973, 1311479, 3596343, 3239173, 1575308]
-      },
-      {
-        'Berlin': [737462, 1345341, 679201, 1203944, 3157759, 3414001, 1910571]
-      }
-    ]
+  render (data) {
+    const {maxSetCount} = this
 
     const keyNames = data.map(d => keys(d))
 
@@ -101,12 +86,8 @@ export default class GroupedBarChart {
       .call(this.xAxis)
 
     this.x1
-      .domain(range(0, 7))
+      .domain(range(maxSetCount))
       .rangeRound([0, this.x0.bandwidth()])
-
-    this.y.domain([0, max(data, function (c) {
-      return max(values(c)[0])
-    })])
 
     this.chart.select('.y.axis')
       .call(this.yAxis)
@@ -128,7 +109,7 @@ export default class GroupedBarChart {
       .style('fill', (d, i) => this.color(i))
 
     const legend = this.chart.selectAll('.legend')
-      .data(range(0, data.length))
+      .data(this.x1.domain())
       .enter()
       .append('g')
       .attr('class', 'legend')
@@ -144,7 +125,7 @@ export default class GroupedBarChart {
       .attr('x', this.w - 24)
       .attr('y', 9)
       // move text a wee bit down since we do not have a letters like q or y
-      // .attr('dy', '0.15em')
+      // .attr('dy', '0.1em')
       .style('text-anchor', 'end')
       .style('alignment-baseline', 'middle')
       .text(d => `${ordinal(d + 1)} set`)

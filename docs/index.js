@@ -26,7 +26,28 @@ class App extends React.Component {
     this.groupedBarChart = new GroupedBarChart({
       target: this.refs.groupedBarChart
     })
-    this.groupedBarChart.render()
+    const d = [
+      {
+        'Fuzhou': [0.43, 0.5]
+      },
+      {
+        'Klagenfurt': [0.54, 0.65, 0.23]
+      },
+      {
+        'Rio': [0.33, 0.54, 0.58]
+      },
+      {
+        'Gstaad': [0.43, 0.68, 0.32]
+      },
+      {
+        'Hamburg': [0.34, 0.45]
+      },
+      {
+        'Berlin': [0.56, 0.3234234]
+      }
+    ]
+
+    this.groupedBarChart.render(d)
   }
 
   onChartOver = (d, i, n) => {
