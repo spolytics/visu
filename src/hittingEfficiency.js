@@ -1,6 +1,6 @@
 
 import {select} from 'd3-selection'
-import {scaleBand, scaleLinear} from 'd3-scale'
+import {scaleBand, scaleLinear, scaleOrdinal, schemeCategory20c} from 'd3-scale'
 import {axisBottom, axisLeft} from 'd3-axis'
 import {format} from 'd3-format'
 import {interpolateHcl} from 'd3-interpolate'
@@ -68,11 +68,7 @@ export default class HittingEfficiency {
     this.chart.append('g')
       .attr('class', 'y axis')
 
-    // http://uigradients.com/#EasyMed
-    this.color = scaleLinear()
-      .domain([0, 1])
-      .range(['#DCE35B', '#45B649'])
-      .interpolate(interpolateHcl)
+    this.color = scaleOrdinal(schemeCategory20c)
   }
 
   renderGrid () {
@@ -97,22 +93,6 @@ export default class HittingEfficiency {
       .call(yAxis)
   }
 
-  renderLabels (data) {
-    const {chart, x, y} = this
-
-    chart.selectAll('.label')
-      .data(data)
-      .enter()
-      .append('text')
-      .style('pointer-events', 'none')
-      .attr('class', 'label')
-      .attr('text-anchor', 'middle')
-      .attr('x', d => x(d.desc) + (x.bandwidth() / 2))
-      .attr('y', d => y(d.value))
-      .attr('dy', '20px')
-      .text(d => format('.3f')(d.value))
-  }
-
   renderChart (data) {
     const {x, y, chart, h, mouseover, mouseout} = this
 
@@ -121,9 +101,9 @@ export default class HittingEfficiency {
       .enter()
       .append('rect')
       .attr('class', (d, i) => `bar bar--${i}`)
-      .style('fill', d => this.color(d.value))
+      .style('fill', () => this.color(0))
       // save color as backup for blur event
-      .attr('data-fill', d => this.color(d.value))
+      .attr('data-fill', () => this.color(0))
       .attr('x', d => x(d.desc))
       .attr('y', d => y(d.value))
       .attr('width', x.bandwidth())
@@ -147,12 +127,11 @@ export default class HittingEfficiency {
     this.renderGrid()
     this.renderAxis()
     this.renderChart(data)
-    this.renderLabels(data)
   }
 
   focus (index) {
     this.chart.select(`.bar.bar--${index}`)
-      .style('fill', d => color(this.color(d.value)).brighter(0.5).toString())
+      .style('fill', d => color(this.color(0)).brighter(0.5).toString())
   }
 
   blur (index) {
