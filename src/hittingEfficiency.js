@@ -3,7 +3,6 @@ import {select} from 'd3-selection'
 import {scaleBand, scaleLinear, scaleOrdinal, schemeCategory20c} from 'd3-scale'
 import {axisBottom, axisLeft} from 'd3-axis'
 import {format} from 'd3-format'
-import {interpolateHcl} from 'd3-interpolate'
 import {color} from 'd3-color'
 
 const defaults = {
