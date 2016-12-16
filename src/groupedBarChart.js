@@ -4,6 +4,7 @@ import {axisBottom, axisLeft} from 'd3-axis'
 import {scaleBand, scaleLinear, scaleOrdinal, schemeCategory20c} from 'd3-scale'
 import {keys} from 'd3-collection'
 import {range} from 'd3-array'
+import {color} from 'd3-color'
 
 const defaults = {
 
@@ -22,7 +23,10 @@ const defaults = {
 
   // max number of sets
   // e.g. best of 5
-  maxSetCount: 3
+  maxSetCount: 3,
+
+  mouseover: () => {},
+  mouseout: () => {}
 
 }
 
@@ -75,7 +79,7 @@ export default class GroupedBarChart {
   }
 
   render (data) {
-    const {maxSetCount} = this
+    const {maxSetCount, mouseover, mouseout} = this
 
     const keyNames = data.map(d => keys(d))
 
@@ -95,13 +99,22 @@ export default class GroupedBarChart {
     const state = this.chart.selectAll('.state')
       .data(data)
       .enter().append('g')
-      .attr('class', 'state')
+      .attr('class', (d, i) => `state state--${i}`)
       .attr('transform', d => `translate(${this.x0(keys(d))}, 0)`)
+      .on('mouseover', (d, i, n) => {
+        this.focus(i)
+        mouseover(d, i, n)
+      })
+      .on('mouseout', (d, i, n) => {
+        this.blur(i)
+        mouseout(d, i, n)
+      })
 
     state.selectAll('rect')
       .data(d => d[keys(d)])
       .enter()
       .append('rect')
+      .attr('data-fill', (d, i) => this.color(i))
       .attr('width', this.x1.bandwidth())
       .attr('x', (d, i) => this.x1(i))
       .attr('y', d => this.y(d))
@@ -129,6 +142,20 @@ export default class GroupedBarChart {
       .style('text-anchor', 'end')
       .style('alignment-baseline', 'middle')
       .text(d => `${ordinal(d + 1)} set`)
+  }
+
+  focus (index) {
+    this.chart
+      .select(`.state.state--${index}`)
+      .selectAll('rect')
+      .style('fill', (d, i) => color(this.color(i)).brighter(0.5).toString())
+  }
+
+  blur (index) {
+    this.chart
+      .select(`.state.state--${index}`)
+      .selectAll('rect')
+      .style('fill', function () { return select(this).attr('data-fill') })
   }
 
 }

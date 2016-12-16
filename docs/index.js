@@ -12,7 +12,8 @@ class App extends React.Component {
       {desc: 'Rio', value: 0.300},
       {desc: 'Gstaad', value: 0.500}
     ],
-    focused: -1
+    focused: -1,
+    focusedGrouped: -1
   }
 
   componentDidMount () {
@@ -24,7 +25,9 @@ class App extends React.Component {
     })
     this.he.render(data)
     this.groupedBarChart = new GroupedBarChart({
-      target: this.refs.groupedBarChart
+      target: this.refs.groupedBarChart,
+      mouseover: this.onChartOverGrouped,
+      mouseout: this.onChartOutGrouped
     })
     const d = [
       {
@@ -62,6 +65,18 @@ class App extends React.Component {
     })
   }
 
+  onChartOverGrouped = (d, i, n) => {
+    this.setState({
+      focusedGrouped: i
+    })
+  }
+
+  onChartOutGrouped = () => {
+    this.setState({
+      focusedGrouped: -1
+    })
+  }
+
   onMouseOver = (index) => {
     this.he.focus(index)
   }
@@ -70,8 +85,18 @@ class App extends React.Component {
     this.he.blur(index)
   }
 
+  onMouseOverGrouped = (index) => {
+    this.groupedBarChart.focus(index)
+  }
+
+  onMouseOutGrouped = (index) => {
+    this.groupedBarChart.blur(index)
+  }
+
   render () {
-    const {data, focused} = this.state
+    const {data, focused, focusedGrouped} = this.state
+    const grouped = ['foo', 'bar', 'baz']
+    console.log(focusedGrouped)
     return (
       <div>
         <svg ref='he' />
@@ -92,6 +117,22 @@ class App extends React.Component {
           </tbody>
         </table>
         <svg ref='groupedBarChart' />
+        <table>
+          <tbody>
+            {grouped.map((d, i) => (
+              <tr
+                key={i}
+                onMouseOver={() => this.onMouseOverGrouped(i)}
+                onMouseOut={() => this.onMouseOutGrouped(i)}
+                style={{backgroundColor: focusedGrouped === i ? '#eee' : '#fff'}}
+              >
+                <td>
+                  {d}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     )
   }
