@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom'
 import {HashRouter, Link, Route} from 'react-router-dom'
 import GroupedBarChartComponent from './groupedBarChart'
 import HittingEfficiencyComponent from './hittingEfficiency'
+import PieChartComponent from './pieChart'
 
 class App extends React.Component {
   render () {
@@ -20,10 +21,14 @@ class App extends React.Component {
             <li>
               <Link to='/hittingefficiency'>Hitting Efficiency</Link>
             </li>
+            <li>
+              <Link to='/piechart'>Pie Chart</Link>
+            </li>
           </ul>
           <Route exact path='/' component={() => <h1>visu</h1>} />
           <Route path='/groupedbarchart' component={GroupedBarChartComponent} />
           <Route path='/hittingefficiency' component={HittingEfficiencyComponent} />
+          <Route path='/piechart' component={PieChartComponent} />
         </div>
       </HashRouter>
     )
