@@ -6,6 +6,7 @@ import GroupedBarChartComponent from './groupedBarChart'
 import HittingEfficiencyComponent from './hittingEfficiency'
 import PieChartComponent from './pieChart'
 import LineChartComponent from './lineChart'
+import SankeyComponent from './sankey'
 
 class App extends React.Component {
   render () {
@@ -28,12 +29,16 @@ class App extends React.Component {
             <li>
               <Link to='/linechart'>Line Chart</Link>
             </li>
+            <li>
+              <Link to='/sankey'>Sankey</Link>
+            </li>
           </ul>
           <Route exact path='/' component={() => <h1>visu</h1>} />
           <Route path='/groupedbarchart' component={GroupedBarChartComponent} />
           <Route path='/hittingefficiency' component={HittingEfficiencyComponent} />
           <Route path='/piechart' component={PieChartComponent} />
           <Route path='/linechart' component={LineChartComponent} />
+          <Route path='/sankey' component={SankeyComponent} />
         </div>
       </HashRouter>
     )
