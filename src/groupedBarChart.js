@@ -37,7 +37,6 @@ const ordinal = (n) => {
 }
 
 export default class GroupedBarChart {
-
   constructor (config) {
     Object.assign(this, defaults, config)
     this.init()
@@ -157,5 +156,4 @@ export default class GroupedBarChart {
       .selectAll('rect')
       .style('fill', function () { return select(this).attr('data-fill') })
   }
-
 }

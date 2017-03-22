@@ -35,7 +35,6 @@ const defaults = {
  * Line chart.
  */
 export default class LineChart {
-
   constructor (config) {
     Object.assign(this, defaults, config)
     this.init()
@@ -358,5 +357,4 @@ export default class LineChart {
   update (data) {
     this.render(data)
   }
-
 }

@@ -37,7 +37,6 @@ const defaults = {
  * Sankey.
  */
 export default class Sankey {
-
   /**
    * construct with given `config`.
    */
@@ -317,5 +316,4 @@ export default class Sankey {
       .attr('y', d => d.dy / 2)
       .filter(d => d.x < this.width / 2)
   }
-
 }

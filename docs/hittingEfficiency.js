@@ -3,7 +3,6 @@ import React from 'react'
 import {HittingEfficiency} from '../'
 
 export default class HittingEfficiencyComponent extends React.Component {
-
   state = {
     data: [
       {desc: 'Fuzhou', value: 0.667},
@@ -68,5 +67,4 @@ export default class HittingEfficiencyComponent extends React.Component {
       </div>
     )
   }
-
 }

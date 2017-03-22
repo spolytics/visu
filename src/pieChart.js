@@ -15,7 +15,6 @@ const defaults = {
  * Pie chart component.
  */
 export default class PieChart {
-
   constructor (config) {
     Object.assign(this, defaults, config)
     this.init()
@@ -320,5 +319,4 @@ export default class PieChart {
       .select('.legend')
       .attr('transform', `translate(${(this.height / 2) + 20}, ${-legendHeight / 2})`)
   }
-
 }

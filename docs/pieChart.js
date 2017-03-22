@@ -57,7 +57,6 @@ const smallSlice = {
 let data = 'a'
 
 export default class PieChartComponent extends React.Component {
-
   componentDidMount () {
     this.pieChart = new PieChart({
       height: 200,
@@ -117,5 +116,4 @@ export default class PieChartComponent extends React.Component {
       </div>
     )
   }
-
 }

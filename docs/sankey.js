@@ -62,7 +62,7 @@ const data = {
     links: [
       { source: 0, target: 9, value: 0.001 },
       { source: 0, target: 10, value: 0 },
-      { source: 1, target: 2, value: 3},
+      { source: 1, target: 2, value: 3 },
       { source: 1, target: 3, value: 6 },
       { source: 1, target: 4, value: 8 },
       { source: 2, target: 5, value: 0.001 },
@@ -92,7 +92,6 @@ const data = {
 let selected = 'a'
 
 export default class SankeyComponent extends React.Component {
-
   componentDidMount () {
     this.sankey = new Sankey({
       target: this.refs.svg
@@ -135,5 +134,4 @@ export default class SankeyComponent extends React.Component {
       </div>
     )
   }
-
 }

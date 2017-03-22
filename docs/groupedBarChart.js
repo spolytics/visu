@@ -3,7 +3,6 @@ import React from 'react'
 import {GroupedBarChart} from '../'
 
 export default class GroupedBarChartComponent extends React.Component {
-
   state = {
     data: [
       {
@@ -81,5 +80,4 @@ export default class GroupedBarChartComponent extends React.Component {
       </div>
     )
   }
-
 }

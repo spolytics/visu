@@ -327,7 +327,6 @@ const b = [
 ]
 
 export default class LineChartComponent extends React.Component {
-
   state = {
     moves: []
   }
@@ -388,5 +387,4 @@ export default class LineChartComponent extends React.Component {
       </section>
     )
   }
-
 }

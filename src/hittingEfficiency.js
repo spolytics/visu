@@ -26,7 +26,6 @@ const defaults = {
 }
 
 export default class HittingEfficiency {
-
   constructor (config) {
     Object.assign(this, defaults, config)
     this.init()
@@ -137,5 +136,4 @@ export default class HittingEfficiency {
     this.chart.select(`.bar.bar--${index}`)
       .style('fill', function () { return select(this).attr('data-fill') })
   }
-
 }
