@@ -1,4 +1,42 @@
 
+.line {
+  fill: none;
+  stroke-width: 1.5px;
+}
+
+.tick line {
+  shape-rendering: crispEdges;
+}
+
 .grid line {
-	stroke: #eee;
+  stroke: #eee;
+  shape-rendering: crispEdges;
+}
+
+.linechart.tip {
+  position: absolute;
+  width: 250px;
+  height: 85px;
+  background: #fff;
+  padding: 5px 10px;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  z-index: 100;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  opacity: 0;
+}
+
+.linechart.tip .title {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  margin-bottom: auto;
+}
+
+.linechart.tip .team {
+  display: flex;
+  justify-content: space-between;
 }
