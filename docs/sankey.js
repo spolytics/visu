@@ -5,98 +5,100 @@ import {Sankey} from '../'
 const data = {
   a: {
     nodes: [
-      {name: 'Attack'},
-      {name: 'Reception'},
-      {name: 'Reception Error'},
-      {name: 'Reception Zero'},
-      {name: 'Reception Good'},
-      {name: 'Setting Error'},
-      {name: 'Setting Zero'},
-      {name: 'Setting Good'},
-      {name: 'Attack Error'},
-      {name: 'Attack Zero'},
-      {name: 'Attack Win'}
+      {id: 'attack', name: 'Attack'},
+      {id: 'reception', name: 'Reception'},
+      {id: 'receptionError', name: 'Reception Error'},
+      {id: 'receptionZero', name: 'Reception Zero'},
+      {id: 'receptionGood', name: 'Reception Good'},
+      {id: 'settingError', name: 'Setting Error'},
+      {id: 'settingZero', name: 'Setting Zero'},
+      {id: 'settingGood', name: 'Setting Good'},
+      {id: 'attackError', name: 'Attack Error'},
+      {id: 'attackZero', name: 'Attack Zero'},
+      {id: 'attackWin', name: 'Attack Win'}
     ],
     links: [
-      { source: 0, target: 9, value: 0.001 },
-      { source: 0, target: 10, value: 0 },
-      { source: 1, target: 2, value: 0.001 },
-      { source: 1, target: 3, value: 5 },
-      { source: 1, target: 4, value: 8 },
-      { source: 2, target: 5, value: 0.001 },
-      { source: 3, target: 8, value: 0 },
-      { source: 3, target: 9, value: 1 },
-      { source: 3, target: 10, value: 1 },
-      { source: 3, target: 5, value: 0 },
-      { source: 3, target: 6, value: 1 },
-      { source: 3, target: 7, value: 2 },
-      { source: 4, target: 8, value: 0 },
-      { source: 4, target: 9, value: 0 },
-      { source: 4, target: 10, value: 0 },
-      { source: 4, target: 5, value: 0 },
-      { source: 4, target: 6, value: 1 },
-      { source: 4, target: 7, value: 7 },
-      { source: 5, target: 8, value: 0.001 },
-      { source: 6, target: 8, value: 1 },
-      { source: 6, target: 9, value: 2 },
-      { source: 6, target: 10, value: 2 },
-      { source: 7, target: 8, value: 1 },
-      { source: 7, target: 9, value: 5 },
-      { source: 7, target: 10, value: 0.001 }
+      { source: 'attack', target: 'attackZero', value: 0.001 },
+      { source: 'attack', target: 'attackWin', value: 0 },
+      { source: 'reception', target: 'receptionError', value: 0.001 },
+      { source: 'reception', target: 'receptionZero', value: 5 },
+      { source: 'reception', target: 'receptionGood', value: 8 },
+      { source: 'receptionError', target: 'settingError', value: 0.001 },
+      { source: 'receptionZero', target: 'attackError', value: 0 },
+      { source: 'receptionZero', target: 'attackZero', value: 1 },
+      { source: 'receptionZero', target: 'attackWin', value: 1 },
+      { source: 'receptionZero', target: 'settingError', value: 0 },
+      { source: 'receptionZero', target: 'settingZero', value: 1 },
+      { source: 'receptionZero', target: 'settingGood', value: 2 },
+      { source: 'receptionGood', target: 'attackError', value: 0 },
+      { source: 'receptionGood', target: 'attackZero', value: 0 },
+      { source: 'receptionGood', target: 'attackWin', value: 0 },
+      { source: 'receptionGood', target: 'settingError', value: 0 },
+      { source: 'receptionGood', target: 'settingZero', value: 1 },
+      { source: 'receptionGood', target: 'settingGood', value: 7 },
+      { source: 'settingError', target: 'attackError', value: 0.001 },
+      { source: 'settingZero', target: 'attackError', value: 1 },
+      { source: 'settingZero', target: 'attackZero', value: 2 },
+      { source: 'settingZero', target: 'attackWin', value: 2 },
+      { source: 'settingGood', target: 'attackError', value: 1 },
+      { source: 'settingGood', target: 'attackZero', value: 5 },
+      { source: 'settingGood', target: 'attackWin', value: 0.001 }
     ]
   },
   b: {
     nodes: [
-      {name: 'Attack'},
-      {name: 'Reception'},
-      {name: 'Reception Error'},
-      {name: 'Reception Zero'},
-      {name: 'Reception Good'},
-      {name: 'Setting Error'},
-      {name: 'Setting Zero'},
-      {name: 'Setting Good'},
-      {name: 'Attack Error'},
-      {name: 'Attack Zero'},
-      {name: 'Attack Win'}
+      {id: 'attack', name: 'Attack'},
+      {id: 'reception', name: 'Reception'},
+      {id: 'receptionError', name: 'Reception Error'},
+      {id: 'receptionZero', name: 'Reception Zero'},
+      {id: 'receptionGood', name: 'Reception Good'},
+      {id: 'settingError', name: 'Setting Error'},
+      {id: 'settingZero', name: 'Setting Zero'},
+      {id: 'settingGood', name: 'Setting Good'},
+      {id: 'attackError', name: 'Attack Error'},
+      {id: 'attackZero', name: 'Attack Zero'},
+      {id: 'attackWin', name: 'Attack Win'}
     ],
     links: [
-      { source: 0, target: 9, value: 0.001 },
-      { source: 0, target: 10, value: 0 },
-      { source: 1, target: 2, value: 3 },
-      { source: 1, target: 3, value: 6 },
-      { source: 1, target: 4, value: 8 },
-      { source: 2, target: 5, value: 0.001 },
-      { source: 3, target: 8, value: 0 },
-      { source: 3, target: 9, value: 2 },
-      { source: 3, target: 10, value: 1 },
-      { source: 3, target: 5, value: 0 },
-      { source: 3, target: 6, value: 1 },
-      { source: 3, target: 7, value: 2 },
-      { source: 4, target: 8, value: 1 },
-      { source: 4, target: 9, value: 0 },
-      { source: 4, target: 10, value: 0 },
-      { source: 4, target: 5, value: 1 },
-      { source: 4, target: 6, value: 1 },
-      { source: 4, target: 7, value: 5 },
-      { source: 5, target: 8, value: 0.001 },
-      { source: 6, target: 8, value: 0 },
-      { source: 6, target: 9, value: 2 },
-      { source: 6, target: 10, value: 2 },
-      { source: 7, target: 8, value: 1 },
-      { source: 7, target: 9, value: 7 },
-      { source: 7, target: 10, value: 5 }
+      { source: 'attack', target: 'attackZero', value: 0.001 },
+      { source: 'attack', target: 'attackWin', value: 0 },
+      { source: 'reception', target: 'receptionError', value: 3 },
+      { source: 'reception', target: 'receptionZero', value: 6 },
+      { source: 'reception', target: 'receptionGood', value: 8 },
+      { source: 'receptionError', target: 'settingError', value: 0.001 },
+      { source: 'receptionZero', target: 'attackError', value: 0 },
+      { source: 'receptionZero', target: 'attackZero', value: 2 },
+      { source: 'receptionZero', target: 'attackWin', value: 1 },
+      { source: 'receptionZero', target: 'settingError', value: 0 },
+      { source: 'receptionZero', target: 'settingZero', value: 1 },
+      { source: 'receptionZero', target: 'settingGood', value: 2 },
+      { source: 'receptionGood', target: 'attackError', value: 1 },
+      { source: 'receptionGood', target: 'attackZero', value: 0 },
+      { source: 'receptionGood', target: 'attackWin', value: 0 },
+      { source: 'receptionGood', target: 'settingError', value: 1 },
+      { source: 'receptionGood', target: 'settingZero', value: 1 },
+      { source: 'receptionGood', target: 'settingGood', value: 5 },
+      { source: 'settingError', target: 'attackError', value: 0.001 },
+      { source: 'settingZero', target: 'attackError', value: 0 },
+      { source: 'settingZero', target: 'attackZero', value: 2 },
+      { source: 'settingZero', target: 'attackWin', value: 2 },
+      { source: 'settingGood', target: 'attackError', value: 1 },
+      { source: 'settingGood', target: 'attackZero', value: 7 },
+      { source: 'settingGood', target: 'attackWin', value: 5 }
     ]
   }
 }
 
-let selected = 'a'
-
 export default class SankeyComponent extends React.Component {
+  state = {
+    selected: 'a'
+  }
+
   componentDidMount () {
     this.sankey = new Sankey({
       target: this.refs.svg
     })
-    this.sankey.render(data[selected])
+    this.sankey.render(data[this.state.selected])
     window.addEventListener('resize', this.resize)
   }
 
@@ -110,7 +112,7 @@ export default class SankeyComponent extends React.Component {
       target: svg,
       width
     })
-    this.sankey.render(data[selected])
+    this.sankey.render(data[this.state.selected])
   }
 
   componentWillUnmount () {
@@ -118,8 +120,11 @@ export default class SankeyComponent extends React.Component {
   }
 
   onClick = () => {
-    selected = selected === 'a' ? 'b' : 'a'
+    const selected = this.state.selected === 'a' ? 'b' : 'a'
     this.sankey.update(data[selected])
+    this.setState({
+      selected
+    })
   }
 
   render () {
