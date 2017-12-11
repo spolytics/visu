@@ -60,3 +60,17 @@
 .link:hover {
   stroke-opacity: .5;
 }
+
+.background {
+  fill: #E3DF9A;
+}
+
+.field {
+  fill: #E3DF9A;
+  stroke: blue;
+}
+
+.net {
+  stroke-width: 2;
+  stroke: white;
+}
