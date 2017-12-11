@@ -9,9 +9,7 @@ const defaults = {
     right: 10,
     bottom: 35,
     left: 60
-  },
-  tickSize: 5,
-  yTicks: 5
+  }
 }
 
 export default class Court {
@@ -22,7 +20,6 @@ export default class Court {
 
   init () {
     const {target, width, height, margin} = this
-    const {tickSize, yTicks} = this
     const w = this.w = width - margin.left - margin.right
     const h = this.h = height - margin.top - margin.bottom
 
