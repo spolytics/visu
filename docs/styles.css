@@ -74,3 +74,10 @@
   stroke-width: 2;
   stroke: white;
 }
+
+.zone {
+  fill: none;
+  stroke: black;
+  shape-rendering: crispEdges;
+  stroke-width: 1px;
+}

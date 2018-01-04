@@ -9,6 +9,8 @@ export default class CourtComponent extends React.Component {
 
   draw = () => {
     this.court = new Court({
+      width: 320,
+      height: 480,
       target: this.refs.svg
     })
     this.court.render()
