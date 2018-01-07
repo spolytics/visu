@@ -75,9 +75,13 @@
   stroke: white;
 }
 
-.zone {
-  fill: none;
+.zone > rect {
+  fill: #E3DF9A;
   stroke: black;
   shape-rendering: crispEdges;
   stroke-width: 1px;
+}
+
+.zone.active > rect {
+  fill: lightsteelblue;
 }
