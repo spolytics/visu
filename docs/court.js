@@ -16,26 +16,38 @@ export default class CourtComponent extends React.Component {
     this.court.render()
   }
 
-  onClick = () => {
-    this.court.clear()
+  clearAll = () => {
+    this.court.clearAll()
   }
 
   highlight = event => {
-    this.court.highlight(event.target.name)
+    const [side, number] = event.target.name.split('-')
+    this.court.highlight(side, number)
+  }
+
+  clear = event => {
+    const [side, number] = event.target.name.split('-')
+    this.court.clear(side, number)
   }
 
   render () {
     return (
       <section>
         <svg ref='svg' />
-        <button type='button' name='b9' onClick={this.highlight}>
+        <button type='button' name='b-9' onClick={this.highlight}>
           highlight zone b9
         </button>
-        <button type='button' name='a3' onClick={this.highlight}>
+        <button type='button' name='b-9' onClick={this.clear}>
+          clear zone b9
+        </button>
+        <button type='button' name='a-3' onClick={this.highlight}>
           highlight zone a3
         </button>
-        <button type='button' onClick={this.onClick}>
-          clear
+        <button type='button' name='a-3' onClick={this.clear}>
+          clear zone a3
+        </button>
+        <button type='button' onClick={this.clearAll}>
+          clear all
         </button>
       </section>
     )

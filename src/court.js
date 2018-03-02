@@ -53,35 +53,22 @@ export default class Court {
     this.zoneWidth = (w - 2 * this.mh) / 3
     this.zoneHeight = (h - 2 * this.mv) / 2 / 3
 
-    // 1, 5, 6
-    this.b1 = this.zone(this.mh, this.mv, 1)
-    this.b6 = this.zone(this.mh + this.zoneWidth, this.mv, 6)
-    this.b5 = this.zone(this.mh + 2 * this.zoneWidth, this.mv, 5)
+    const zones = [
+      [1, 6, 5],
+      [9, 8, 7],
+      [2, 3, 4],
+      [4, 3, 2],
+      [7, 8, 9],
+      [5, 6, 1]
+    ]
 
-    // 7, 8, 9
-    this.b9 = this.zone(this.mh, this.mv + this.zoneHeight, 9)
-    this.b8 = this.zone(this.mh + this.zoneWidth, this.mv + this.zoneHeight, 8)
-    this.b7 = this.zone(this.mh + 2 * this.zoneWidth, this.mv + this.zoneHeight, 7)
-
-    // 2, 3, 4
-    this.b2 = this.zone(this.mh, this.mv + 2 * this.zoneHeight, 2)
-    this.b3 = this.zone(this.mh + this.zoneWidth, this.mv + 2 * this.zoneHeight, 3)
-    this.b4 = this.zone(this.mh + 2 * this.zoneWidth, this.mv + 2 * this.zoneHeight, 4)
-
-    // 2, 3, 4
-    this.a4 = this.zone(this.mh, this.mv + 3 * this.zoneHeight, 4)
-    this.a3 = this.zone(this.mh + this.zoneWidth, this.mv + 3 * this.zoneHeight, 3)
-    this.a2 = this.zone(this.mh + 2 * this.zoneWidth, this.mv + 3 * this.zoneHeight, 2)
-
-    // 7, 8, 9
-    this.a7 = this.zone(this.mh, this.mv + 4 * this.zoneHeight, 7)
-    this.a8 = this.zone(this.mh + this.zoneWidth, this.mv + 4 * this.zoneHeight, 8)
-    this.a9 = this.zone(this.mh + 2 * this.zoneWidth, this.mv + 4 * this.zoneHeight, 9)
-
-    // 1, 2, 3
-    this.a5 = this.zone(this.mh, this.mv + 5 * this.zoneHeight, 5)
-    this.a6 = this.zone(this.mh + this.zoneWidth, this.mv + 5 * this.zoneHeight, 6)
-    this.a1 = this.zone(this.mh + 2 * this.zoneWidth, this.mv + 5 * this.zoneHeight, 1)
+    zones.forEach((row, rowNumber) => {
+      row.forEach((zone, columnNumber) => {
+        const x = columnNumber * this.zoneWidth
+        const y = rowNumber * this.zoneHeight
+        this.drawZone(this.mh + x, this.mv + y, rowNumber < 3 ? 'b' :'a', zone)
+      })
+    })
 
     this.net = this.chart
       .append('line')
@@ -92,16 +79,11 @@ export default class Court {
       .attr('class', 'net')
   }
 
-  zone (top, left, text) {
-    const that = this
+  drawZone (top, left, side, number) {
     const zone = this.chart
       .append('g')
-      .attr('class', 'zone')
+      .attr('class', `zone side${side} number${number}`)
       .attr('transform', `translate(${top}, ${left})`)
-      .on('click', function () {
-        that.chart.selectAll('.zone').classed('active', false)
-        select(this).classed('active', true)
-      })
 
     zone
       .append('rect')
@@ -116,16 +98,26 @@ export default class Court {
       .attr('y', this.zoneHeight / 2)
       .attr('text-anchor', 'middle')
       .attr('alignment-baseline', 'middle')
-      .text(text)
-
-    return zone
+      .text(number)
   }
 
-  highlight (zone) {
-    this[zone].classed('active', true)
+  highlight (side, number) {
+    this.chart.select(`.zone.side${side}.number${number}`).classed('active', true)
   }
 
-  clear () {
+  clear (side, number) {
+    this.chart.select(`.zone.side${side}.number${number}`).classed('active', false)
+  }
+
+  clearA () {
+    this.chart.selectAll('.zone.sidea').classed('active', false)
+  }
+
+  clearB () {
+    this.chart.selectAll('.zone.sideb').classed('active', false)
+  }
+
+  clearAll () {
     this.chart.selectAll('.zone').classed('active', false)
   }
 
