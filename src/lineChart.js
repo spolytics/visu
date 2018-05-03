@@ -1,9 +1,10 @@
 
 import {select, mouse} from 'd3-selection'
-import {scaleLinear, scaleOrdinal, schemeCategory10} from 'd3-scale'
+import {scaleLinear, scaleOrdinal} from 'd3-scale'
 import {axisBottom, axisLeft} from 'd3-axis'
 import {line, curveLinear, area} from 'd3-shape'
 import 'd3-transition'
+import {schemeCategory10} from 'd3-scale-chromatic'
 
 const defaults = {
 

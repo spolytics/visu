@@ -1,6 +1,6 @@
 
 import React from 'react'
-import {LineChart} from '../'
+import {LineChart} from '../src/'
 
 const a = [
   {

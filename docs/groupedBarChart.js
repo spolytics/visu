@@ -1,6 +1,6 @@
 
 import React from 'react'
-import {GroupedBarChart} from '../'
+import {GroupedBarChart} from '../src/'
 
 export default class GroupedBarChartComponent extends React.Component {
   state = {

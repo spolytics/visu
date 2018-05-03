@@ -72,11 +72,11 @@
 
 .net {
   stroke-width: 2;
-  stroke: white;
+  stroke: black;
 }
 
 .zone > rect {
-  fill: #E3DF9A;
+  // fill: #E3DF9A;
   stroke: black;
   shape-rendering: crispEdges;
   stroke-width: 1px;

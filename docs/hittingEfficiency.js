@@ -1,6 +1,6 @@
 
 import React from 'react'
-import {HittingEfficiency} from '../'
+import {HittingEfficiency} from '../src/'
 
 export default class HittingEfficiencyComponent extends React.Component {
   state = {

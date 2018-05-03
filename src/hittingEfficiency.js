@@ -1,9 +1,10 @@
 
 import {select} from 'd3-selection'
-import {scaleBand, scaleLinear, scaleOrdinal, schemeCategory20c} from 'd3-scale'
+import {scaleBand, scaleLinear, scaleOrdinal} from 'd3-scale'
 import {axisBottom, axisLeft} from 'd3-axis'
 import {format} from 'd3-format'
 import {color} from 'd3-color'
+import {schemeCategory10} from 'd3-scale-chromatic'
 
 const defaults = {
 
@@ -66,7 +67,7 @@ export default class HittingEfficiency {
     this.chart.append('g')
       .attr('class', 'y axis')
 
-    this.color = scaleOrdinal(schemeCategory20c)
+    this.color = scaleOrdinal(schemeCategory10)
   }
 
   renderGrid () {

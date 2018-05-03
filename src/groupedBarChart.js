@@ -1,10 +1,11 @@
 
 import {select} from 'd3-selection'
 import {axisBottom, axisLeft} from 'd3-axis'
-import {scaleBand, scaleLinear, scaleOrdinal, schemeCategory20c} from 'd3-scale'
+import {scaleBand, scaleLinear, scaleOrdinal} from 'd3-scale'
 import {keys} from 'd3-collection'
 import {range} from 'd3-array'
 import {color} from 'd3-color'
+import {schemeCategory10} from 'd3-scale-chromatic'
 
 const defaults = {
 
@@ -74,7 +75,7 @@ export default class GroupedBarChart {
     this.chart.append('g')
       .attr('class', 'y axis')
 
-    this.color = scaleOrdinal(schemeCategory20c)
+    this.color = scaleOrdinal(schemeCategory10)
   }
 
   render (data) {
