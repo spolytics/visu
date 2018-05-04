@@ -2,15 +2,16 @@
 import {select} from 'd3-selection'
 import {scaleQuantize, scaleLinear, scaleSequential} from 'd3-scale'
 import {interpolateOranges, interpolateBlues} from 'd3-scale-chromatic'
+import {axisRight} from 'd3-axis'
 
 const defaults = {
   width: 480,
   height: 640,
   margin: {
-    top: 15,
-    right: 10,
-    bottom: 35,
-    left: 60
+    top: 10,
+    right: 100,
+    bottom: 10,
+    left: 10
   }
 }
 
@@ -71,6 +72,49 @@ export default class Court {
       .attr('x2', 0.95 * w)
       .attr('y2', h / 2)
       .attr('class', 'net')
+
+    // add legend
+    const gradient = this.chart
+      .append('defs')
+      .append('linearGradient')
+      .attr('id', 'gradient')
+      .attr('x1', '100%')
+      .attr('y1', '0%')
+      .attr('x2', '100%')
+      .attr('y2', '100%')
+
+    gradient
+      .append('stop')
+      .attr('offset', '0%')
+      .attr('stop-color', to(1))
+
+    gradient
+      .append('stop')
+      .attr('offset', '100%')
+      .attr('stop-color', to(0))
+
+    // legend group for rect and axis
+    const legend = this.chart
+      .append('g')
+      .attr('transform', 'translate(250, 0)')
+
+    const legendHeight = 200
+
+    legend
+      .append('rect')
+      .attr('width', 25)
+      .attr('height', legendHeight)
+      .style('fill', 'url(#gradient)')
+
+    // add ticks
+    const y = scaleLinear().range([legendHeight, 0]).domain([1, 100])
+    const yAxis = axisRight(y)
+
+    legend
+      .append('g')
+      .attr('class', 'y axis')
+      .attr('transform', 'translate(25, 0)')
+      .call(yAxis)
   }
 
   drawZone (top, left, side, number) {
