@@ -129,7 +129,7 @@ export default class Court {
       .attr('y', 0)
       .attr('width', this.zoneWidth)
       .attr('height', this.zoneHeight)
-      .attr('fill', side === 'a' ? from(number * 0.1) : to(number * 0.1))
+      .attr('fill', 'white')
 
     zone
       .append('text')
@@ -138,5 +138,22 @@ export default class Court {
       .attr('text-anchor', 'middle')
       .attr('alignment-baseline', 'middle')
       .text(number)
+  }
+
+  render (data) {
+    data.forEach((d, i) => {
+      this.chart
+        .select(`.sideb.number${i+1} rect`)
+        .attr('fill', to(d))
+    })
+  }
+
+  update (data) {
+    data.forEach((d, i) => {
+      this.chart
+        .select(`.sideb.number${i+1} rect`)
+        .transition()
+        .attr('fill', to(d))
+    })
   }
 }
