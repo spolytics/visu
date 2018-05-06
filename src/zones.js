@@ -3,6 +3,7 @@ import {select} from 'd3-selection'
 import {scaleQuantize, scaleLinear, scaleSequential} from 'd3-scale'
 import {interpolateOranges, interpolateBlues} from 'd3-scale-chromatic'
 import {axisRight} from 'd3-axis'
+import {format} from 'd3-format'
 
 const defaults = {
   width: 480,
@@ -73,7 +74,7 @@ export default class Court {
       .attr('y2', h / 2)
       .attr('class', 'net')
 
-    // add legend
+    // add blue legend
     const gradient = this.chart
       .append('defs')
       .append('linearGradient')
@@ -96,7 +97,7 @@ export default class Court {
     // legend group for rect and axis
     const legend = this.chart
       .append('g')
-      .attr('transform', 'translate(250, 0)')
+      .attr('transform', 'translate(240, 0)')
 
     const legendHeight = 200
 
@@ -107,10 +108,48 @@ export default class Court {
       .style('fill', 'url(#gradient)')
 
     // add ticks
-    const y = scaleLinear().range([legendHeight, 0]).domain([1, 100])
+    const y = scaleLinear().range([legendHeight, 0]).domain([0, 100])
     const yAxis = axisRight(y)
+      .tickFormat(d => `${d} %`)
 
     legend
+      .append('g')
+      .attr('class', 'y axis')
+      .attr('transform', 'translate(25, 0)')
+      .call(yAxis)
+
+    // add orange legend
+    const orangeGradient = this.chart
+      .append('defs')
+      .append('linearGradient')
+      .attr('id', 'orange-gradient')
+      .attr('x1', '100%')
+      .attr('y1', '0%')
+      .attr('x2', '100%')
+      .attr('y2', '100%')
+
+    orangeGradient
+      .append('stop')
+      .attr('offset', '0%')
+      .attr('stop-color', from(1))
+
+    orangeGradient
+      .append('stop')
+      .attr('offset', '100%')
+      .attr('stop-color', from(0))
+
+    // legend group for rect and axis
+    const orangeLegend = this.chart
+      .append('g')
+      .attr('transform', `translate(240, ${h - legendHeight})`)
+
+    orangeLegend
+      .append('rect')
+      .attr('width', 25)
+      .attr('height', legendHeight)
+      .style('fill', 'url(#orange-gradient)')
+
+    orangeLegend
       .append('g')
       .attr('class', 'y axis')
       .attr('transform', 'translate(25, 0)')
@@ -140,20 +179,31 @@ export default class Court {
       .text(number)
   }
 
-  render (data) {
-    data.forEach((d, i) => {
+  render (start, end) {
+    start.forEach((d, i) => {
       this.chart
         .select(`.sideb.number${i+1} rect`)
         .attr('fill', to(d))
     })
+    end.forEach((d, i) => {
+      this.chart
+        .select(`.sidea.number${i+1} rect`)
+        .attr('fill', from(d))
+    })
   }
 
-  update (data) {
-    data.forEach((d, i) => {
+  update (start, end) {
+    start.forEach((d, i) => {
       this.chart
         .select(`.sideb.number${i+1} rect`)
         .transition()
         .attr('fill', to(d))
+    })
+    end.forEach((d, i) => {
+      this.chart
+        .select(`.sidea.number${i+1} rect`)
+        .transition()
+        .attr('fill', from(d))
     })
   }
 }

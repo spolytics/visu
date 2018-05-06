@@ -38,11 +38,15 @@ export default class ZonesComponent extends React.Component {
       height: 480,
       target: this.refs.svg
     })
-    this.zones.render(sets.a)
+    this.zones.render(sets.a, sets.b)
   }
 
   update = event => {
-    this.zones.update(sets[event.target.name])
+    if (event.target.name === 'a') {
+      this.zones.update(sets.b, sets.a)
+      return
+    }
+    this.zones.update(sets.a, sets.b)
   }
 
   render () {
