@@ -154,6 +154,23 @@ export default class Court {
       .attr('class', 'y axis')
       .attr('transform', 'translate(25, 0)')
       .call(yAxis)
+
+    // add labels for start and end zone
+    this.chart
+      .append('text')
+      .attr('text-anchor', 'middle')
+      .attr('alignment-baseline', 'middle')
+      .attr('transform', `translate(0, ${this.mv + 1.5 * this.zoneHeight}) rotate(270)`)
+      .attr('fill', '#666')
+      .text('end zone')
+
+    this.chart
+      .append('text')
+      .attr('text-anchor', 'middle')
+      .attr('alignment-baseline', 'middle')
+      .attr('transform', `translate(0, ${this.mv + 4.5 * this.zoneHeight}) rotate(270)`)
+      .attr('fill', '#666')
+      .text('start zone')
   }
 
   drawZone (top, left, side, number) {
