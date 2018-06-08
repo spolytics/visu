@@ -16,11 +16,22 @@ export default class HittingEfficiencyComponent extends React.Component {
   componentDidMount () {
     const {data} = this.state
     this.he = new HittingEfficiency({
+      width: document.body.clientWidth,
       target: this.refs.he,
       mouseover: this.onChartOver,
       mouseout: this.onChartOut
     })
     this.he.render(data)
+    window.addEventListener('resize', this.resize)
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('resize', this.resize)
+  }
+
+  resize = () => {
+    const width = document.body.clientWidth
+    this.he.resize(width)
   }
 
   onChartOver = (d, i, n) => {

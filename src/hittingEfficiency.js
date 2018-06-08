@@ -68,18 +68,18 @@ export default class HittingEfficiency {
       .attr('class', 'y axis')
 
     this.color = scaleOrdinal(schemeCategory10)
+
+    this.gridAxis = axisLeft(this.y)
+      .ticks(5)
+      .tickSizeInner(-this.w)
+      .tickSizeOuter(0)
+      .tickFormat('')
   }
 
   renderGrid () {
     this.chart
       .selectAll('.y.grid')
-      .call(
-        axisLeft(this.y)
-          .ticks(5)
-          .tickSizeInner(-this.w)
-          .tickSizeOuter(0)
-          .tickFormat('')
-      )
+      .call(this.gridAxis)
   }
 
   renderAxis () {
@@ -136,5 +136,29 @@ export default class HittingEfficiency {
   blur (index) {
     this.chart.select(`.bar.bar--${index}`)
       .style('fill', function () { return select(this).attr('data-fill') })
+  }
+
+  resize (width) {
+    const {chart, target, margin, xAxis, x, gridAxis} = this
+
+    select(target)
+      .attr('width', width)
+
+    const w = width - margin.left - margin.right
+
+    x.rangeRound([0, w])
+
+    chart.select('.x.axis')
+      .call(xAxis)
+
+    chart.selectAll('.bar')
+      .attr('x', d => x(d.desc))
+      .attr('width', x.bandwidth())
+
+    gridAxis.tickSizeInner(-w)
+
+    chart
+      .selectAll('.y.grid')
+      .call(gridAxis)
   }
 }
