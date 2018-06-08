@@ -157,4 +157,27 @@ export default class GroupedBarChart {
       .selectAll('rect')
       .style('fill', function () { return select(this).attr('data-fill') })
   }
+
+  resize (width) {
+    const {chart, target, margin, x0, xAxis, x1} = this
+
+    select(target)
+      .attr('width', width)
+
+    const w = width - margin.left - margin.right
+
+    x0.rangeRound([0, w])
+
+    x1.rangeRound([0, x0.bandwidth()])
+
+    chart.select('.x.axis')
+      .call(xAxis)
+
+    const state = chart.selectAll('.state')
+      .attr('transform', d => `translate(${x0(keys(d))}, 0)`)
+
+    state.selectAll('rect')
+      .attr('width', x1.bandwidth())
+      .attr('x', (d, i) => x1(i))
+  }
 }

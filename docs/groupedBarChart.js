@@ -29,11 +29,22 @@ export default class GroupedBarChartComponent extends React.Component {
 
   componentDidMount () {
     this.groupedBarChart = new GroupedBarChart({
+      width: document.body.clientWidth,
       target: this.refs.groupedBarChart,
       mouseover: this.onChartOverGrouped,
       mouseout: this.onChartOutGrouped
     })
     this.groupedBarChart.render(this.state.data)
+    window.addEventListener('resize', this.resize)
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('resize', this.resize)
+  }
+
+  resize = () => {
+    const width = document.body.clientWidth
+    this.groupedBarChart.resize(width)
   }
 
   onChartOverGrouped = (d, i, n) => {
