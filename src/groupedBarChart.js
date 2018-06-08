@@ -179,5 +179,13 @@ export default class GroupedBarChart {
     state.selectAll('rect')
       .attr('width', x1.bandwidth())
       .attr('x', (d, i) => x1(i))
+
+    const legend = chart.selectAll('.legend')
+
+    legend.select('rect')
+      .attr('x', w - 18)
+
+    legend.select('text')
+      .attr('x', w - 24)
   }
 }
