@@ -61,27 +61,36 @@
   stroke-opacity: .5;
 }
 
+.net {
+  stroke-width: 2;
+  stroke: #e0e0e0;
+}
+
 .background {
-  fill: #E3DF9A;
+  fill: none;
 }
 
 .field {
-  fill: #E3DF9A;
-  stroke: blue;
-}
-
-.net {
-  stroke-width: 2;
-  stroke: black;
+  fill: none;
 }
 
 .zone > rect {
-  // fill: #E3DF9A;
-  stroke: black;
+  fill: none;
+  stroke: #e0e0e0;
   shape-rendering: crispEdges;
   stroke-width: 1px;
 }
 
-.zone.active > rect {
-  fill: lightsteelblue;
+.zone.start > rect,
+.zone.end > rect {
+  fill: #337ab7;
+}
+
+.zone.start.end > rect {
+  fill: #002E6B;
+}
+
+.zone.start > text,
+.zone.end > text {
+  fill: #fff;
 }

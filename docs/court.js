@@ -20,31 +20,28 @@ export default class CourtComponent extends React.Component {
     this.court.clearAll()
   }
 
-  highlight = event => {
+  setStartZone = event => {
     const [side, number] = event.target.name.split('-')
-    this.court.highlight(side, number)
+    this.court.setStartZone(side, number)
   }
 
-  clear = event => {
+  setEndZone = event => {
     const [side, number] = event.target.name.split('-')
-    this.court.clear(side, number)
+    this.court.setEndZone(side, number)
   }
 
   render () {
     return (
       <section>
         <svg ref='svg' />
-        <button type='button' name='b-9' onClick={this.highlight}>
-          highlight zone b9
+        <button type='button' name='b-9' onClick={this.setStartZone}>
+          start zone b9
         </button>
-        <button type='button' name='b-9' onClick={this.clear}>
-          clear zone b9
+        <button type='button' name='a-3' onClick={this.setEndZone}>
+          end zone a3
         </button>
-        <button type='button' name='a-3' onClick={this.highlight}>
-          highlight zone a3
-        </button>
-        <button type='button' name='a-3' onClick={this.clear}>
-          clear zone a3
+        <button type='button' name='b-9' onClick={this.setEndZone}>
+          end zone b9
         </button>
         <button type='button' onClick={this.clearAll}>
           clear all

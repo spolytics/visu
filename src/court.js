@@ -101,27 +101,16 @@ export default class Court {
       .text(number)
   }
 
-  highlight (side, number) {
-    this.chart.select(`.zone.side${side}.number${number}`).classed('active', true)
+  setStartZone (side, number) {
+    this.chart.select(`.zone.side${side}.number${number}`).classed('start', true)
   }
 
-  clear (side, number) {
-    this.chart.select(`.zone.side${side}.number${number}`).classed('active', false)
-  }
-
-  clearA () {
-    this.chart.selectAll('.zone.sidea').classed('active', false)
-  }
-
-  clearB () {
-    this.chart.selectAll('.zone.sideb').classed('active', false)
+  setEndZone (side, number) {
+    this.chart.select(`.zone.side${side}.number${number}`).classed('end', true)
   }
 
   clearAll () {
-    this.chart.selectAll('.zone').classed('active', false)
-  }
-
-  render (data) {
-    console.log(data)
+    this.chart.selectAll('.zone').classed('start', false)
+    this.chart.selectAll('.zone').classed('end', false)
   }
 }
