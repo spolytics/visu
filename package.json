@@ -1,6 +1,6 @@
 {
   "name": "visu",
-  "version": "4.2.0",
+  "version": "5.0.0",
   "description": "Data visualization",
   "main": "lib/index.js",
   "scripts": {
