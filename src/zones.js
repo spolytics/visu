@@ -1,9 +1,8 @@
 
 import {select} from 'd3-selection'
-import {scaleQuantize, scaleLinear, scaleSequential} from 'd3-scale'
+import {scaleLinear, scaleSequential} from 'd3-scale'
 import {interpolateOranges, interpolateBlues} from 'd3-scale-chromatic'
 import {axisRight} from 'd3-axis'
-import {format} from 'd3-format'
 
 const defaults = {
   width: 480,
