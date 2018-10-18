@@ -90,7 +90,7 @@ export default class Sankey {
   /**
    * render
    */
-  render (data, options = {}) {
+  render (data) {
     // get data
     this.sankey(data)
 
@@ -98,7 +98,7 @@ export default class Sankey {
     const grads = this.chart
       .append('defs')
       .selectAll('linearGradient')
-      .data(data.links, d => this.gradientID)
+      .data(data.links, () => this.gradientID)
       .enter()
       .append('linearGradient')
       .attr('id', this.gradientID)
@@ -180,7 +180,7 @@ export default class Sankey {
     const grads = this.chart
       .select('defs')
       .selectAll('linearGradient')
-      .data(data.links, d => this.gradientID)
+      .data(data.links, () => this.gradientID)
 
     // enter selection
     const gradsEnter = grads

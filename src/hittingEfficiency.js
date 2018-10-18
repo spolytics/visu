@@ -130,7 +130,7 @@ export default class HittingEfficiency {
 
   focus (index) {
     this.chart.select(`.bar.bar--${index}`)
-      .style('fill', d => color(this.color(0)).brighter(0.5).toString())
+      .style('fill', () => color(this.color(0)).brighter(0.5).toString())
   }
 
   blur (index) {

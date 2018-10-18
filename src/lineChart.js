@@ -183,7 +183,7 @@ export default class LineChart {
       .attr('width', this.w)
       .attr('height', this.h)
       .style('fill', 'transparent')
-      .on('mousemove', (event) => {
+      .on('mousemove', () => {
         const m = mouse(this.chart.node())
         const x = this.x.invert(m[0])
         const i = Math.round(x)
@@ -315,7 +315,7 @@ export default class LineChart {
   /**
    * Render grid.
    */
-  renderGrid (data) {
+  renderGrid () {
     const {yTicks} = this
     this.chart
       .selectAll('.grid.y')
