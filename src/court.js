@@ -29,34 +29,18 @@ export default class Court {
       .append('g')
       .attr('transform', `translate(${margin.left}, ${margin.top})`)
 
-    this.background = this.chart
-      .append('rect')
-      .attr('x', 0)
-      .attr('y', 0)
-      .attr('width', w)
-      .attr('height', h)
-      .attr('class', 'background')
-
     // margin horizontal
     this.mh = 0.10 * w
     // margin vertical
     this.mv = 0.10 * h
 
-    this.field = this.chart
-      .append('rect')
-      .attr('x', this.mh)
-      .attr('y', this.mv)
-      .attr('width', w - 2 * this.mh)
-      .attr('height', h - 2 * this.mv)
-      .attr('class', 'field')
-
     this.zoneWidth = (w - 2 * this.mh) / 3
-    this.zoneHeight = (h - 2 * this.mv) / 2 / 3
+    this.zoneHeight = (h - 3 * this.mv) / 2 / 3
 
     const zones = [
-      [1, 6, 5],
-      [9, 8, 7],
-      [2, 3, 4],
+      [4, 3, 2],
+      [7, 8, 9],
+      [5, 6, 1],
       [4, 3, 2],
       [7, 8, 9],
       [5, 6, 1]
@@ -65,18 +49,29 @@ export default class Court {
     zones.forEach((row, rowNumber) => {
       row.forEach((zone, columnNumber) => {
         const x = columnNumber * this.zoneWidth
-        const y = rowNumber * this.zoneHeight
+        let y = rowNumber * this.zoneHeight
+        if (rowNumber > 2) {
+          y += this.zoneHeight
+        }
         this.drawZone(this.mh + x, this.mv + y, rowNumber < 3 ? 'b' :'a', zone)
       })
     })
 
-    this.net = this.chart
-      .append('line')
-      .attr('x1', 0.05 * w)
-      .attr('y1', h / 2)
-      .attr('x2', 0.95 * w)
-      .attr('y2', h / 2)
-      .attr('class', 'net')
+    this.chart
+      .append('text')
+      .attr('text-anchor', 'middle')
+      .attr('alignment-baseline', 'middle')
+      .attr('transform', `translate(${w / 2}, ${this.mv + 3.75 * this.zoneHeight})`)
+      .attr('fill', '#666')
+      .text('start zone')
+
+    this.chart
+      .append('text')
+      .attr('text-anchor', 'middle')
+      .attr('alignment-baseline', 'middle')
+      .attr('transform', `translate(${w / 2}, ${this.mv - 0.25 * this.zoneHeight})`)
+      .attr('fill', '#666')
+      .text('end zone')
   }
 
   drawZone (top, left, side, number) {

@@ -1,6 +1,6 @@
 
 import React from 'react'
-import {Court} from '../'
+import {Court} from '../src'
 
 export default class CourtComponent extends React.Component {
   componentDidMount () {
@@ -13,7 +13,6 @@ export default class CourtComponent extends React.Component {
       height: 480,
       target: this.refs.svg
     })
-    this.court.render()
   }
 
   clearAll = () => {
