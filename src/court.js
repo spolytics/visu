@@ -9,7 +9,8 @@ const defaults = {
     right: 10,
     bottom: 35,
     left: 60
-  }
+  },
+  click: () => {}
 }
 
 export default class Court {
@@ -38,24 +39,131 @@ export default class Court {
     this.zoneHeight = (h - 3 * this.mv) / 2 / 3
 
     const zones = [
-      [4, 3, 2],
-      [7, 8, 9],
-      [5, 6, 1],
-      [4, 3, 2],
-      [7, 8, 9],
-      [5, 6, 1]
+      [
+        {
+          side: 'b',
+          number: 4
+        },
+        {
+          side: 'b',
+          number: 3
+        },
+        {
+          side: 'b',
+          number: 2
+        }
+      ],
+      [
+        {
+          side: 'b',
+          number: 7
+        },
+        {
+          side: 'b',
+          number: 8
+        },
+        {
+          side: 'b',
+          number: 9
+        }
+      ],
+      [
+        {
+          side: 'b',
+          number: 5
+        },
+        {
+          side: 'b',
+          number: 6
+        },
+        {
+          side: 'b',
+          number: 1
+        }
+      ],
+      [
+        {
+          side: 'a',
+          number: 4
+        },
+        {
+          side: 'a',
+          number: 3
+        },
+        {
+          side: 'a',
+          number: 2
+        }
+      ],
+      [
+        {
+          side: 'a',
+          number: 7
+        },
+        {
+          side: 'a',
+          number: 8
+        },
+        {
+          side: 'a',
+          number: 9
+        }
+      ],
+      [
+        {
+          side: 'a',
+          number: 5
+        },
+        {
+          side: 'a',
+          number: 6
+        },
+        {
+          side: 'a',
+          number: 1
+        }
+      ]
     ]
 
-    zones.forEach((row, rowNumber) => {
-      row.forEach((zone, columnNumber) => {
-        const x = columnNumber * this.zoneWidth
-        let y = rowNumber * this.zoneHeight
-        if (rowNumber > 2) {
+    const grid = this.chart.selectAll('.row')
+      .data(zones)
+      .enter()
+      // add group for row
+      .append('g')
+      .attr('transform', (d, i) => {
+        let y = i * this.zoneHeight
+        if (i > 2) {
           y += this.zoneHeight
         }
-        this.drawZone(this.mh + x, this.mv + y, rowNumber < 3 ? 'b' :'a', zone)
+        return `translate(0, ${this.mv + y})`
       })
-    })
+      .selectAll('.zone')
+      .data(d => d)
+      .enter()
+      // add group for rect and text
+      .append('g')
+      .attr('transform', (d, i) => {
+        const x = i * this.zoneWidth
+        return `translate(${this.mh + x}, 0)`
+      })
+      .attr('class', d => `zone side${d.side} number${d.number}`)
+
+      // add rect
+    grid.append('rect')
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('width', this.zoneWidth)
+      .attr('height', this.zoneHeight)
+      .on('click', this.click)
+
+      // add text
+    grid.append('text')
+      .attr('x', this.zoneWidth / 2)
+      .attr('y', this.zoneHeight / 2)
+      .attr('text-anchor', 'middle')
+      .attr('alignment-baseline', 'middle')
+      .style('pointer-events', 'none')
+      .text(d => d.number)
 
     this.chart
       .append('text')
@@ -72,28 +180,6 @@ export default class Court {
       .attr('transform', `translate(${w / 2}, ${this.mv - 0.25 * this.zoneHeight})`)
       .attr('fill', '#666')
       .text('end zone')
-  }
-
-  drawZone (top, left, side, number) {
-    const zone = this.chart
-      .append('g')
-      .attr('class', `zone side${side} number${number}`)
-      .attr('transform', `translate(${top}, ${left})`)
-
-    zone
-      .append('rect')
-      .attr('x', 0)
-      .attr('y', 0)
-      .attr('width', this.zoneWidth)
-      .attr('height', this.zoneHeight)
-
-    zone
-      .append('text')
-      .attr('x', this.zoneWidth / 2)
-      .attr('y', this.zoneHeight / 2)
-      .attr('text-anchor', 'middle')
-      .attr('alignment-baseline', 'middle')
-      .text(number)
   }
 
   setStartZone (side, number) {
