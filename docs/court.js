@@ -11,8 +11,13 @@ export default class CourtComponent extends React.Component {
     this.court = new Court({
       width: 320,
       height: 480,
-      target: this.refs.svg
+      target: this.refs.svg,
+      click: this.onClick
     })
+  }
+
+  onClick = (a, b, c) => {
+    console.log(a, b, c)
   }
 
   clearAll = () => {

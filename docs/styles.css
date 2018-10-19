@@ -74,8 +74,12 @@
   fill: none;
 }
 
+.zone {
+  cursor: pointer;
+}
+
 .zone > rect {
-  fill: none;
+  fill: #fff;
   stroke: #e0e0e0;
   shape-rendering: crispEdges;
   stroke-width: 1px;
